@@ -3,18 +3,17 @@ package com.airport.ridepooling.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-
-@Entity 
-@Table(name = "cabs") 
-@Getter 
-@Setter 
-@NoArgsConstructor 
-@AllArgsConstructor 
-@Builder 
+@Entity
+@Table(name = "cabs")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Cab {
 
-    @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = true)
@@ -27,9 +26,15 @@ public class Cab {
     private Integer totalSeats;
 
     @Column(nullable = false)
+    private Integer remainingSeats;
+
+    @Column(nullable = false)
     private Integer maxLuggage;
 
-    @Enumerated(EnumType.STRING) 
+    @Column(nullable = false)
+    private Integer remainingLuggage;
+
+    @Enumerated(EnumType.STRING)
     private CabStatus status;
 
     public enum CabStatus {

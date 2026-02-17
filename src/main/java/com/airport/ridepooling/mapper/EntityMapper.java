@@ -25,7 +25,9 @@ public class EntityMapper {
                 .licensePlate(entity.getLicensePlate())
                 .model(entity.getModel())
                 .totalSeats(entity.getTotalSeats())
+                .remainingSeats(entity.getRemainingSeats())
                 .maxLuggage(entity.getMaxLuggage())
+                .remainingLuggage(entity.getRemainingLuggage())
                 .status(entity.getStatus())
                 .build();
     }

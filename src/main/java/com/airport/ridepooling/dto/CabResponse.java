@@ -15,6 +15,8 @@ public class CabResponse {
     private String licensePlate;
     private String model;
     private Integer totalSeats;
+    private Integer remainingSeats;
     private Integer maxLuggage;
+    private Integer remainingLuggage;
     private CabStatus status;
 }

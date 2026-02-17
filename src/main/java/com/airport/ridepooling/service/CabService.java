@@ -22,7 +22,11 @@ public class CabService {
         // Convert input "request" into a DB Entity
         Cab cab = entityMapper.toCabEntity(request);
 
-        //Every new cab MUST start as AVAILABLE
+        // Initialize capacity fields
+        cab.setRemainingSeats(cab.getTotalSeats());
+        cab.setRemainingLuggage(cab.getMaxLuggage());
+
+        // Every new cab MUST start as AVAILABLE
         cab.setStatus(Cab.CabStatus.AVAILABLE);
 
         // Save to DB and convert to formal "response"
