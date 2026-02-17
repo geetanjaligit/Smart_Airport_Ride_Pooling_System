@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  db:
+    # postgres image
+    image: postgres:15
+    # container name
+    container_name: ride_pooling_db
+    # Set the credentials for our database
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+    ports:
+      - "${DB_PORT}:5432"
+    # Ensure data is saved even if the container stops
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
