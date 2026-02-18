@@ -163,4 +163,8 @@ You can directly copy these JSON payloads into Postman or Swagger UI to test the
 *   **Connection Pooling**: Uses **HikariCP** for efficient database connection management.
 *   **Transactional Integrity**: All critical operations are `@Transactional` to prevent data corruption during failures.
 
+---
+
+*Built to showcase scalable system design, robust concurrency control, and efficient real-world ride pooling optimization.*
+
 
