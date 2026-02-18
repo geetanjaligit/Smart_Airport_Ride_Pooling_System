@@ -26,4 +26,10 @@ public class BookingController {
     public List<BookingResponse> getPendingBookings() {
         return bookingService.getPendingBookings();
     }
+
+    // Allows a user to cancel their booking.
+    @DeleteMapping("/{id}/cancel")
+    public BookingResponse cancelBooking(@PathVariable Long id) {
+        return bookingService.cancelBooking(id);
+    }
 }

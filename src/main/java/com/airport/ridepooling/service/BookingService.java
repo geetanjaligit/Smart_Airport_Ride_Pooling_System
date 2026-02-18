@@ -4,9 +4,11 @@ import com.airport.ridepooling.dto.BookingCreateRequest;
 import com.airport.ridepooling.dto.BookingResponse;
 import com.airport.ridepooling.mapper.EntityMapper;
 import com.airport.ridepooling.model.BookingRequest;
+import com.airport.ridepooling.model.Cab;
 import com.airport.ridepooling.repository.BookingRequestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -37,5 +39,38 @@ public class BookingService {
         return bookingRequestRepository.findByStatus(BookingRequest.BookingStatus.PENDING).stream()
                 .map(entityMapper::toBookingResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public BookingResponse cancelBooking(Long bookingId) {
+        //Find the booking
+        BookingRequest request = bookingRequestRepository.findById(bookingId)
+                .orElseThrow(() -> new RuntimeException("Booking not found"));
+
+        //Prevent double-cancellation
+        if (request.getStatus() == BookingRequest.BookingStatus.CANCELLED) {
+            throw new RuntimeException("Booking is already cancelled");
+        }
+
+        //Capacity Restoration Logic
+        // If the passenger was already assigned to a cab, we must give the space back
+        if (request.getStatus() == BookingRequest.BookingStatus.POOLED && request.getAssignedCab() != null) {
+            Cab cab = request.getAssignedCab();
+
+            // Give back seats and luggage space
+            cab.setRemainingSeats(cab.getRemainingSeats() + request.getSeatsRequired());
+            cab.setRemainingLuggage(cab.getRemainingLuggage() + request.getLuggageQuantity());
+
+            // If the cab was FULL, it's now PARTIAL (accepting new people again)
+            if (cab.getStatus() == Cab.CabStatus.FULL) {
+                cab.setStatus(Cab.CabStatus.PARTIAL);
+            }
+        }
+
+        //Update status and remove the cab link
+        request.setStatus(BookingRequest.BookingStatus.CANCELLED);
+        request.setAssignedCab(null);
+
+        return entityMapper.toBookingResponse(bookingRequestRepository.save(request));
     }
 }
