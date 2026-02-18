@@ -22,5 +22,5 @@ public class BookingResponse {
     private Integer luggageQuantity;
     private LocalDateTime requestTime;
     private BookingStatus status;
-    private String assignedCabPlate; 
+    private String assignedCabPlate;
 }

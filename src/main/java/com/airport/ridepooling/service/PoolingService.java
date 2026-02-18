@@ -22,8 +22,8 @@ public class PoolingService {
     private final BookingRequestRepository bookingRepository;
     private final CabRepository cabRepository;
 
-    //This method runs through every passenger waiting for a ride.
-    
+    // This method runs through every passenger waiting for a ride.
+
     @Transactional
     public void processPendingBookings() {
         List<BookingRequest> pendingRequests = bookingRepository.findByStatus(BookingRequest.BookingStatus.PENDING);
@@ -38,11 +38,11 @@ public class PoolingService {
 
     private void matchRequestToCab(BookingRequest request, List<Cab> cabs) {
         for (Cab cab : cabs) {
-            //Can they fit?
+            // Can they fit?
             if (cab.getRemainingSeats() >= request.getSeatsRequired() &&
                     cab.getRemainingLuggage() >= request.getLuggageQuantity()) {
 
-                //If the cab already has people, are they going to the same area?
+                // If the cab already has people, are they going to the same area?
                 if (cab.getStatus() == Cab.CabStatus.PARTIAL) {
                     // Find the first person in this cab to compare destinations
                     BookingRequest firstPassenger = bookingRepository.findAll().stream()
@@ -54,13 +54,13 @@ public class PoolingService {
                                 firstPassenger.getDestLat(), firstPassenger.getDestLng(),
                                 request.getDestLat(), request.getDestLng());
 
-                        // If they are more than 10km apart, don't pool them 
+                        // If they are more than 10km apart, don't pool them
                         if (distance > 10.0)
                             continue;
                     }
                 }
 
-                //ASSIGN THE RIDE
+                // ASSIGN THE RIDE
                 assignCabToRequest(request, cab);
                 break; // Move to the next passenger
             }

@@ -23,7 +23,7 @@ public class BookingService {
         // Convert input request to DB Entity
         BookingRequest request = entityMapper.toBookingEntity(requestDTO);
 
-        //Automatic timestamp and initial status
+        // Automatic timestamp and initial status
         request.setRequestTime(LocalDateTime.now());
         request.setStatus(BookingRequest.BookingStatus.PENDING);
 
