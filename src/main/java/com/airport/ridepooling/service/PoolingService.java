@@ -68,6 +68,27 @@ public class PoolingService {
     }
 
     private void assignCabToRequest(BookingRequest request, Cab cab) {
+        //Dynamic Pricing Logic
+        //Calculate the real distance
+        double distance = DistanceUtils.calculateDistance(
+                request.getPickupLat(), request.getPickupLng(),
+                request.getDestLat(), request.getDestLng());
+
+        //Pricing Constants in INR
+        double baseFare = 150.0; // Starting price in Rs
+        double ratePerKm = 18.0; // Charge per Km in Rs
+
+        //Calculate Base Fare
+        double fare = baseFare + (distance * ratePerKm);
+
+        //Apply 20% DISCOUNT for shared/pooled rides
+        if (cab.getStatus() == Cab.CabStatus.PARTIAL) {
+            fare = fare * 0.8;
+        }
+
+        //final price (rounded)
+        request.setPrice(Math.round(fare * 100.0) / 100.0);
+
         // Update Request
         request.setAssignedCab(cab);
         request.setStatus(BookingRequest.BookingStatus.POOLED);

@@ -20,6 +20,7 @@ public class BookingResponse {
     private Double destLng;
     private Integer seatsRequired;
     private Integer luggageQuantity;
+    private Double price;
     private LocalDateTime requestTime;
     private BookingStatus status;
     private String assignedCabPlate;

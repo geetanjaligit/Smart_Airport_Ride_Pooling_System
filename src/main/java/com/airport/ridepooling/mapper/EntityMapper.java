@@ -56,6 +56,7 @@ public class EntityMapper {
                 .destLng(entity.getDestLng())
                 .seatsRequired(entity.getSeatsRequired())
                 .luggageQuantity(entity.getLuggageQuantity())
+                .price(entity.getPrice())
                 .requestTime(entity.getRequestTime())
                 .status(entity.getStatus())
                 .assignedCabPlate(entity.getAssignedCab() != null ? entity.getAssignedCab().getLicensePlate() : null)

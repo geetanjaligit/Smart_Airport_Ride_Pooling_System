@@ -47,6 +47,9 @@ public class BookingRequest {
     @Column(nullable = false)
     private Integer luggageQuantity;
 
+    @Column
+    private Double price;
+
     @Column(nullable = false)
     private LocalDateTime requestTime;
 
