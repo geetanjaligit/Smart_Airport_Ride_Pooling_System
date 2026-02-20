@@ -120,7 +120,7 @@ Fares are calculated using the following logic:
 *   Coordinates provided are within a valid geographic range (Decimal Degrees).
 *   Cab capacity includes the driver (Driver seat is not counted in totalSeats).
 
-## 12. Sample Test Data (Copy-Paste Ready 📋)
+## 12. Sample Test Data
 You can directly copy these JSON payloads into Postman or Swagger UI to test the system flow.
 
 ### STEP 1: Register a Cab
